@@ -62,7 +62,7 @@ AccessControlInfo:
   CanAccessCore2                : false 
 
   # Virtual Address Mappings
-    SystemCallAccess: 
+  SystemCallAccess: 
     ControlMemory: 1
     QueryMemory: 2
     ExitProcess: 3
