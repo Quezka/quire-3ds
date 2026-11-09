@@ -10,7 +10,6 @@ TitleInfo:
 Option:
   UseOnSD: true
   FreeProductCode: true
-  MediaFootPrint: SDCard
   EnableCompress: true
   EnableExternalSegment: false
 AccessControlInfo:
