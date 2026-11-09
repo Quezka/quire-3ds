@@ -11,7 +11,6 @@ Option:
   UseOnSD: true
   FreeProductCode: true
   EnableCompress: true
-  EnableExternalSegment: false
 AccessControlInfo:
   FileSystemAccess:
     - DirectSdmc
@@ -24,8 +23,6 @@ AccessControlInfo:
   EnableForceDebug: false
   CanWriteSharedPage: true
   CanUsePrivilegedPriority: false
-  CanUseNonAlphaSavedata: false
-  CanUseCoreMem: false
   SystemMode: 64MB
   SystemModeExt: Legacy
   CpuSpeed: 268MHz
