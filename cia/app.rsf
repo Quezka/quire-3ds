@@ -1,0 +1,57 @@
+BasicInfo:
+  Title: Quire
+  ProductCode: CTR-P-QUIR
+  Logo: Nintendo
+RomFs:
+  RootPath: ../romfs
+TitleInfo:
+  Category: Application
+  UniqueId: 0xC7E31
+Option:
+  UseOnSD: true
+  FreeProductCode: true
+  MediaFootPrint: SDCard
+  EnableCompress: true
+  EnableExternalSegment: false
+AccessControlInfo:
+  FileSystemAccess:
+    - DirectSdmc
+    - UseExtSaveData
+  IdealProcessor: 0
+  AffinityMask: 1
+  Priority: 16
+  MaxCpu: 0x9E
+  DisableDebug: false
+  EnableForceDebug: false
+  CanWriteSharedPage: true
+  CanUsePrivilegedPriority: false
+  CanUseNonAlphaSavedata: false
+  CanUseCoreMem: false
+  SystemMode: 64MB
+  SystemModeExt: Legacy
+  CpuSpeed: 268MHz
+  EnableL2Cache: false
+  CanAccessCore2: false
+  IoAccessControl:
+    - FsMountNand
+  ServiceAccessControl:
+    - APT:U
+    - ac:u
+    - am:net
+    - cfg:u
+    - fs:USER
+    - gsp::Gpu
+    - hid:USER
+    - ndm:u
+    - pxi:dev
+    - soc:U
+    - y2r:u
+    - cam:u
+    - ir:rst
+    - ir:u
+    - ir:USER
+  ResourceLimitCategory: Application
+SystemControlInfo:
+  SaveDataSize: 128KB
+  RemasterVersion: 0
+  StackSize: 0x40000

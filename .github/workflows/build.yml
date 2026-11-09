@@ -25,10 +25,20 @@ jobs:
       - name: Trusted certificates for HTTPS
         run: curl -sSfL https://curl.se/ca/cacert.pem -o romfs/cacert.pem
       - run: make
+      - name: Installable .cia (FBI, 3DSDL)
+        run: |
+          apt-get update -qq && apt-get install -y -qq unzip >/dev/null
+          curl -sSfL https://github.com/3DSGuy/Project_CTR/releases/download/makerom-v0.19.0/makerom-v0.19.0-ubuntu_x86_64.zip -o m.zip
+          unzip -oq m.zip makerom && install -m755 makerom /usr/local/bin/
+          curl -sSfL https://github.com/carstene1ns/3ds-bannertool/releases/download/1.2.3/bannertool-1.2.3-linux.tar.gz | tar xz
+          install -m755 "$(find . -name bannertool -type f | head -1)" /usr/local/bin/
+          sh cia/build.sh
       - uses: actions/upload-artifact@v4
         with:
           name: quire-3ds
-          path: quire.3dsx
+          path: |
+            quire.3dsx
+            quire.cia
 
   release:
     needs: [test, build]
@@ -46,4 +56,4 @@ jobs:
         run: |
           version=${GITHUB_REF_NAME#v}
           notes=$(awk -v v="$version" '$0 ~ "^## \\[" v "\\]" {on=1; next} /^## \[/ {on=0} on' CHANGELOG.md)
-          gh release create "$GITHUB_REF_NAME" --title "Quire for 3DS $version" --notes "$notes" quire.3dsx
+          gh release create "$GITHUB_REF_NAME" --title "Quire for 3DS $version" --notes "$notes" quire.3dsx quire.cia
