@@ -1,0 +1,7 @@
+build/
+build-tests/
+*.3dsx
+*.smdh
+*.elf
+*.map
+romfs/cacert.pem
