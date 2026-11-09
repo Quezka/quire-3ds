@@ -5,7 +5,7 @@ shifts, events, routines, water), open tasks and your notes, synced from your ow
 
 ## Setting it up
 
-1. Copy `quire.3dsx` to `sd:/3ds/` and start it from the Homebrew Launcher.
+1. Install `quire.cia` with FBI (or copy `quire.3dsx` to `sd:/3ds/` and start it from the Homebrew Launcher).
 2. On your computer, open Quire's sync settings and show the setup code for the phone (it needs sync through your own
    Quire server; Firebase isn't supported here).
 3. On the 3DS press **A** and hold the outer camera up to the code.
