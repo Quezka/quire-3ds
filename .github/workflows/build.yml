@@ -21,7 +21,12 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - name: Libraries
-        run: dkp-pacman -Sy --noconfirm --needed 3ds-curl 3ds-mbedtls 3ds-zlib citro2d citro3d libctru
+        run: |
+          for i in 1 2 3 4 5; do
+            dkp-pacman -Sy --noconfirm --needed 3ds-curl 3ds-mbedtls 3ds-zlib citro2d citro3d libctru && exit 0
+            sleep 20
+          done
+          exit 1
       - name: Trusted certificates for HTTPS
         run: curl -sSfL https://curl.se/ca/cacert.pem -o romfs/cacert.pem
       - run: make
