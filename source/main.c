@@ -199,7 +199,8 @@ static void draw_top(void) {
     case SCAN:
         camera_draw(0, 0);  // the live picture, so you can aim
         C2D_DrawRectSolid(0, 212, 0.6f, 400, 28, C2D_Color32(0, 0, 0, 0xC0));
-        text(10, 216, SMALL, TEXT, 0, "Point the outer camera at the code.  B: cancel");
+        text(10, 216, SMALL, TEXT, 0, camera_inner() ? "Inner camera.  L/R: outer camera  B: cancel"
+                                                     : "Outer camera.  L/R: inner camera  B: cancel");
         return;
     case CONFIRM_SIGNOUT:
         text(20, 70, TITLE, TEXT, 360, "Sign out?");
@@ -372,6 +373,8 @@ int main(void) {
                     open_tab(0);
                     if (network) do_sync();
                 }
+            } else if (down & (KEY_L | KEY_R)) {
+                camera_switch();
             } else if (down & KEY_B) {
                 camera_stop();
                 screen = SETUP;

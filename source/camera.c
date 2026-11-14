@@ -15,6 +15,18 @@ static u16 *pixels;
 static u8 *grey;
 static int running;
 static u32 transfer;
+// user 2026-11-14: outer cam = wrong one -> default inner; L/R switch
+static int inner = 1;
+
+int camera_inner(void) { return inner; }
+
+static void setup(u32 cam) {
+    CAMU_SetSize(cam, SIZE_CTR_TOP_LCD, CONTEXT_A);
+    CAMU_SetOutputFormat(cam, OUTPUT_RGB_565, CONTEXT_A);
+    CAMU_SetNoiseFilter(cam, true);
+    CAMU_SetAutoExposure(cam, true);
+    CAMU_SetAutoWhiteBalance(cam, true);
+}
 
 int camera_start(void) {
     if (running) return 1;
@@ -27,20 +39,27 @@ int camera_start(void) {
         grey = NULL;
         return 0;
     }
-    CAMU_SetSize(SELECT_OUT1, SIZE_CTR_TOP_LCD, CONTEXT_A);
-    CAMU_SetOutputFormat(SELECT_OUT1, OUTPUT_RGB_565, CONTEXT_A);
-    CAMU_SetNoiseFilter(SELECT_OUT1, true);
-    CAMU_SetAutoExposure(SELECT_OUT1, true);
-    CAMU_SetAutoWhiteBalance(SELECT_OUT1, true);
+    // in1 + out1 share port cam1; activate pick which
+    setup(SELECT_IN1);
+    setup(SELECT_OUT1);
     CAMU_SetTrimming(PORT_CAM1, false);
     CAMU_GetMaxBytes(&transfer, W, H);
     CAMU_SetTransferBytes(PORT_CAM1, transfer, W, H);
-    CAMU_Activate(SELECT_OUT1);
+    CAMU_Activate(inner ? SELECT_IN1 : SELECT_OUT1);
     CAMU_ClearBuffer(PORT_CAM1);
     CAMU_StartCapture(PORT_CAM1);
     memset(grey, 0, W * H);
     running = 1;
     return 1;
+}
+
+void camera_switch(void) {
+    inner = !inner;
+    if (!running) return;
+    CAMU_StopCapture(PORT_CAM1);
+    CAMU_Activate(inner ? SELECT_IN1 : SELECT_OUT1);
+    CAMU_ClearBuffer(PORT_CAM1);
+    CAMU_StartCapture(PORT_CAM1);
 }
 
 void camera_stop(void) {
